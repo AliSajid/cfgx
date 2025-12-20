@@ -1,0 +1,40 @@
+[package]
+name = "cfgx"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT OR Apache-2.0"
+description = "A macro for applying conditional compilation attributes to blocks of items"
+repository = "https://github.com/yourusername/cfgx"
+keywords = ["macro", "cfg", "conditional", "compilation"]
+categories = ["development-tools", "rust-patterns"]
+
+[lib]
+proc-macro = false # This is a declarative macro, not a proc macro
+
+[dependencies]
+# No dependencies needed for declarative macros
+
+[dev-dependencies]
+# For compile-fail tests (optional, can add later)
+trybuild = "1.0.114"
+
+[[test]]
+name = "basic_blocks"
+path = "tests/basic_blocks.rs"
+
+[[test]]
+name = "if_else"
+path = "tests/if_else.rs"
+
+[[test]]
+name = "item_types"
+path = "tests/item_types.rs"
+
+[[test]]
+name = "edge_cases"
+path = "tests/edge_cases.rs"
+
+[[test]]
+name = "real_world"
+path = "tests/real_world.rs"
