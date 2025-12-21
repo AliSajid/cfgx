@@ -77,7 +77,7 @@ local security_checks = new Mapping<String, Step> {
   ["detect-private-key"] = Builtins.detect_private_key
   ["check-added-large-files"] = Builtins.check_added_large_files
   ["gitleaks"] = new Step {
-    check = "gitleaks git"
+    check = "gitleaks git --no-banner --log-level error"
   }
 }
 
