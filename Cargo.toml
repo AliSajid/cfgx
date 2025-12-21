@@ -1,13 +1,19 @@
+# SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+#
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
 [package]
 name = "cfgx"
 version = "0.1.0"
 edition = "2021"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Ali Sajid Imami <395482+AliSajid@users.noreply.github.com>"]
 license = "MIT OR Apache-2.0"
 description = "A macro for applying conditional compilation attributes to blocks of items"
 repository = "https://github.com/yourusername/cfgx"
 keywords = ["macro", "cfg", "conditional", "compilation"]
 categories = ["development-tools", "rust-patterns"]
+rust-version = "1.78.0"
 
 [lib]
 proc-macro = false # This is a declarative macro, not a proc macro
