@@ -24,7 +24,7 @@ NC='\033[0m' # No Color
 
 run_test() {
     echo -e "${BLUE}Running:${NC} $1"
-    eval $1
+    eval "$1"
     echo -e "${GREEN}✓ Passed${NC}"
     echo ""
 }
