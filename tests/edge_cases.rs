@@ -18,6 +18,7 @@ fn test_empty_block() {
 
 // Test 4.2: Very long item list
 #[test]
+#[allow(dead_code)]
 fn test_very_long_item_list() {
     cfgx! {
         #[cfg(test)] {
@@ -202,11 +203,11 @@ fn test_generic_items() {
 fn test_lifetime_parameters() {
     cfgx! {
         #[cfg(test)] {
-            fn with_lifetime<'a>(s: &'a str) -> &'a str {
+            fn with_lifetime(s: &str) -> &str {
                 s
             }
 
-            fn with_multiple_lifetimes<'a, 'b>(s1: &'a str, s2: &'b str) -> &'a str {
+            fn with_multiple_lifetimes<'a>(s1: &'a str, _s2: &str) -> &'a str {
                 s1
             }
 
@@ -315,6 +316,7 @@ fn test_async_functions() {
 
 // Additional test: Unsafe items
 #[test]
+#[allow(dead_code)]
 fn test_unsafe_items() {
     cfgx! {
         #[cfg(test)] {

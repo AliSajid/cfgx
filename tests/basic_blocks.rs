@@ -1,6 +1,8 @@
 //! Basic block syntax tests (Category 1)
 //!
 //! These tests validate the fundamental block syntax without if/else.
+//! All tests use feature flags instead of platform-specific cfg to allow
+//! comprehensive testing on any platform.
 
 use cfgx::cfgx;
 
@@ -12,7 +14,7 @@ fn test_single_block_single_item() {
             const VALUE: u32 = 42;
         }
     }
-    
+
     assert_eq!(VALUE, 42);
 }
 
@@ -20,13 +22,13 @@ fn test_single_block_single_item() {
 #[test]
 fn test_single_block_multiple_items() {
     cfgx! {
-        #[cfg(not(mips))] {
+        #[cfg(not(feature = "never_enabled"))] {
             const A: &str = "alpha";
             const B: &str = "beta";
             const C: u32 = 100;
         }
     }
-    
+
     assert_eq!(A, "alpha");
     assert_eq!(B, "beta");
     assert_eq!(C, 100);
@@ -36,27 +38,26 @@ fn test_single_block_multiple_items() {
 #[test]
 fn test_multiple_separate_blocks() {
     cfgx! {
-        #[cfg(unix)] {
-            const PLATFORM: &str = "unix";
+        #[cfg(feature = "platform_a")] {
+            const PLATFORM: &str = "a";
         }
-        #[cfg(windows)] {
-            const PLATFORM: &str = "windows";
+        #[cfg(feature = "platform_b")] {
+            const PLATFORM: &str = "b";
         }
-        #[cfg(target_family = "wasm")] {
-            const PLATFORM: &str = "wasm";
+        #[cfg(not(any(feature = "platform_a", feature = "platform_b")))] {
+            const PLATFORM: &str = "default";
         }
     }
-    
+
     // PLATFORM should exist and have one of the three values
-    // depending on the target platform
-    #[cfg(unix)]
-    assert_eq!(PLATFORM, "unix");
-    
-    #[cfg(windows)]
-    assert_eq!(PLATFORM, "windows");
-    
-    #[cfg(target_family = "wasm")]
-    assert_eq!(PLATFORM, "wasm");
+    #[cfg(feature = "platform_a")]
+    assert_eq!(PLATFORM, "a");
+
+    #[cfg(feature = "platform_b")]
+    assert_eq!(PLATFORM, "b");
+
+    #[cfg(not(any(feature = "platform_a", feature = "platform_b")))]
+    assert_eq!(PLATFORM, "default");
 }
 
 // Test 1.4: Non-cfg attributes
@@ -68,7 +69,7 @@ fn test_non_cfg_attributes() {
             const UNUSED: u32 = 0;
         }
     }
-    
+
     // This test passes if it compiles without warnings
     // The items are marked as allowed to be dead code
 }
@@ -77,47 +78,40 @@ fn test_non_cfg_attributes() {
 #[test]
 fn test_complex_cfg_conditions() {
     cfgx! {
-        #[cfg(all(unix, target_pointer_width = "64"))] {
+        #[cfg(all(test, not(feature = "disable_ptr_size")))] {
             const PTR_SIZE: usize = 8;
         }
-        #[cfg(all(unix, target_pointer_width = "32"))] {
+        #[cfg(all(test, feature = "disable_ptr_size"))] {
             const PTR_SIZE: usize = 4;
         }
-        #[cfg(windows)] {
-            const PTR_SIZE: usize = 8; // Assume 64-bit for test
-        }
     }
-    
-    // On 64-bit Unix systems
-    #[cfg(all(unix, target_pointer_width = "64"))]
+
+    // On normal test runs without the feature
+    #[cfg(not(feature = "disable_ptr_size"))]
     assert_eq!(PTR_SIZE, 8);
-    
-    // On 32-bit Unix systems
-    #[cfg(all(unix, target_pointer_width = "32"))]
+
+    // With the feature enabled
+    #[cfg(feature = "disable_ptr_size")]
     assert_eq!(PTR_SIZE, 4);
-    
-    // On Windows
-    #[cfg(windows)]
-    assert_eq!(PTR_SIZE, 8);
 }
 
 // Test 1.5b: Complex cfg with any
 #[test]
 fn test_complex_cfg_any() {
     cfgx! {
-        #[cfg(any(windows, target_family = "wasm"))] {
-            const IS_WINDOWS_OR_WASM: bool = true;
+        #[cfg(any(feature = "opt1", feature = "opt2"))] {
+            const IS_OPTION_ENABLED: bool = true;
         }
-        #[cfg(not(any(windows, target_family = "wasm")))] {
-            const IS_WINDOWS_OR_WASM: bool = false;
+        #[cfg(not(any(feature = "opt1", feature = "opt2")))] {
+            const IS_OPTION_ENABLED: bool = false;
         }
     }
-    
-    #[cfg(any(windows, target_family = "wasm"))]
-    assert_eq!(IS_WINDOWS_OR_WASM, true);
-    
-    #[cfg(not(any(windows, target_family = "wasm")))]
-    assert_eq!(IS_WINDOWS_OR_WASM, false);
+
+    #[cfg(any(feature = "opt1", feature = "opt2"))]
+    assert_eq!(IS_OPTION_ENABLED, true);
+
+    #[cfg(not(any(feature = "opt1", feature = "opt2")))]
+    assert_eq!(IS_OPTION_ENABLED, false);
 }
 
 // Additional test: Empty block (edge case preview)
@@ -128,7 +122,7 @@ fn test_empty_block() {
             // No items - this should compile fine
         }
     }
-    
+
     // Test passes if it compiles
 }
 
@@ -141,7 +135,7 @@ fn test_items_with_multiple_attributes() {
             struct TestStruct {
                 value: u32,
             }
-            
+
             #[inline]
             #[must_use]
             const fn get_value() -> u32 {
@@ -149,7 +143,7 @@ fn test_items_with_multiple_attributes() {
             }
         }
     }
-    
+
     let s = TestStruct { value: 42 };
     let s2 = s; // Tests Clone/Copy
     assert_eq!(s.value, s2.value);

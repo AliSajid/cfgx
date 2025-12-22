@@ -20,6 +20,7 @@ fn test_functions() {
 
 // Test 3.2: Structs and enums
 #[test]
+#[allow(dead_code)]
 fn test_structs_and_enums() {
     cfgx! {
         if #[cfg(feature = "extended")] {
