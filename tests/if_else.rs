@@ -128,6 +128,7 @@ fn test_complex_types_in_branches() {
 
 // Additional test: if/else with structs that have different shapes
 #[test]
+#[allow(dead_code)]
 fn test_different_struct_shapes() {
     cfgx! {
         if #[cfg(feature = "extended")] {

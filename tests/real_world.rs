@@ -1,7 +1,7 @@
 //! Real-world scenario tests (Category 8)
 //!
 //! These tests validate practical use cases, particularly for bioinformatics
-//! and systems programming.
+//! and systems programming. All tests use feature flags for cross-platform testing.
 
 use cfgx::cfgx;
 
@@ -53,11 +53,13 @@ fn test_bioinformatics_precision() {
     assert_eq!(PRECISION_NAME, "single");
 }
 
-// Test 8.2: Platform-specific file I/O
+// Test 8.2: Platform-specific file I/O (using features instead of target_os)
 #[test]
+#[allow(dead_code)]
 fn test_platform_file_io() {
+    // Using nested if/else instead of else-if chain
     cfgx! {
-        if #[cfg(unix)] {
+        if #[cfg(feature = "os_unix")] {
             const PATH_SEPARATOR: char = '/';
             const LINE_ENDING: &str = "\n";
             const PLATFORM: &str = "unix";
@@ -69,35 +71,40 @@ fn test_platform_file_io() {
             fn is_absolute(path: &str) -> bool {
                 path.starts_with('/')
             }
-        } else if #[cfg(windows)] {
-            const PATH_SEPARATOR: char = '\\';
-            const LINE_ENDING: &str = "\r\n";
-            const PLATFORM: &str = "windows";
-
-            fn normalize_path(path: &str) -> String {
-                path.replace('/', "\\")
-            }
-
-            fn is_absolute(path: &str) -> bool {
-                path.len() >= 2 && path.chars().nth(1) == Some(':')
-            }
         } else {
-            const PATH_SEPARATOR: char = '/';
-            const LINE_ENDING: &str = "\n";
-            const PLATFORM: &str = "other";
+            // Not unix - could be windows or other
+            cfgx! {
+                if #[cfg(feature = "os_windows")] {
+                    const PATH_SEPARATOR: char = '\\';
+                    const LINE_ENDING: &str = "\r\n";
+                    const PLATFORM: &str = "windows";
 
-            fn normalize_path(path: &str) -> String {
-                path.to_string()
-            }
+                    fn normalize_path(path: &str) -> String {
+                        path.replace('/', "\\")
+                    }
 
-            fn is_absolute(path: &str) -> bool {
-                path.starts_with('/')
+                    fn is_absolute(path: &str) -> bool {
+                        path.len() >= 2 && path.chars().nth(1) == Some(':')
+                    }
+                } else {
+                    const PATH_SEPARATOR: char = '/';
+                    const LINE_ENDING: &str = "\n";
+                    const PLATFORM: &str = "other";
+
+                    fn normalize_path(path: &str) -> String {
+                        path.to_string()
+                    }
+
+                    fn is_absolute(path: &str) -> bool {
+                        path.starts_with('/')
+                    }
+                }
             }
         }
     }
 
     // Test path operations
-    #[cfg(unix)]
+    #[cfg(feature = "os_unix")]
     {
         assert_eq!(PATH_SEPARATOR, '/');
         assert_eq!(normalize_path("a\\b\\c"), "a/b/c");
@@ -105,12 +112,18 @@ fn test_platform_file_io() {
         assert!(!is_absolute("relative/path"));
     }
 
-    #[cfg(windows)]
+    #[cfg(feature = "os_windows")]
     {
         assert_eq!(PATH_SEPARATOR, '\\');
         assert_eq!(normalize_path("a/b/c"), "a\\b\\c");
         assert!(is_absolute("C:\\Users"));
         assert!(!is_absolute("relative\\path"));
+    }
+
+    #[cfg(not(any(feature = "os_unix", feature = "os_windows")))]
+    {
+        assert_eq!(PATH_SEPARATOR, '/');
+        assert_eq!(normalize_path("test/path"), "test/path");
     }
 }
 
@@ -395,5 +408,58 @@ fn test_allocation_strategies() {
     {
         assert_eq!(STRATEGY, "small");
         assert_eq!(CHUNK_SIZE, 1024);
+    }
+}
+
+// Test 8.8: Multi-feature combination test
+#[test]
+fn test_feature_combinations() {
+    cfgx! {
+        if #[cfg(all(feature = "high_precision", feature = "extended"))] {
+            const CONFIG: &str = "high-extended";
+            type ComputeFloat = f64;
+        } else {
+            cfgx! {
+                if #[cfg(feature = "high_precision")] {
+                    const CONFIG: &str = "high-standard";
+                    type ComputeFloat = f64;
+                } else {
+                    cfgx! {
+                        if #[cfg(feature = "extended")] {
+                            const CONFIG: &str = "standard-extended";
+                            type ComputeFloat = f32;
+                        } else {
+                            const CONFIG: &str = "standard";
+                            type ComputeFloat = f32;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Verify the right config is active
+    #[cfg(all(feature = "high_precision", feature = "extended"))]
+    {
+        assert_eq!(CONFIG, "high-extended");
+        let _x: ComputeFloat = 1.0f64;
+    }
+
+    #[cfg(all(feature = "high_precision", not(feature = "extended")))]
+    {
+        assert_eq!(CONFIG, "high-standard");
+        let _x: ComputeFloat = 1.0f64;
+    }
+
+    #[cfg(all(not(feature = "high_precision"), feature = "extended"))]
+    {
+        assert_eq!(CONFIG, "standard-extended");
+        let _x: ComputeFloat = 1.0f32;
+    }
+
+    #[cfg(not(any(feature = "high_precision", feature = "extended")))]
+    {
+        assert_eq!(CONFIG, "standard");
+        let _x: ComputeFloat = 1.0f32;
     }
 }

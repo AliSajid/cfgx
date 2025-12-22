@@ -142,9 +142,13 @@
 /// ```
 #[macro_export]
 macro_rules! cfgx {
-    // TODO: Implement if/else syntax
     // Rule for if/else with cfg attributes
     // Pattern: if #[cfg(...)] { items } else { items }
+    //
+    // This rule handles zero or more if/else blocks.
+    // For each block:
+    //   - Items in the if branch get #[cfg($meta)]
+    //   - Items in the else branch get #[cfg(not($meta))]
     (
         $(
             if #[cfg($meta:meta)] {
@@ -154,15 +158,25 @@ macro_rules! cfgx {
             }
         )*
     ) => {
-        // TODO: Expand each if/else block
-        // Each item in if block gets #[cfg($meta)]
-        // Each item in else block gets #[cfg(not($meta))]
-        compile_error!("if/else syntax not yet implemented");
+        $(
+            // Expand the if branch: apply #[cfg($meta)] to each item
+            $(
+                #[cfg($meta)]
+                $item
+            )*
+            // Expand the else branch: apply #[cfg(not($meta))] to each item
+            $(
+                #[cfg(not($meta))]
+                $item_f
+            )*
+        )*
     };
 
-    // TODO: Implement basic block syntax
     // Rule for blocks with any attribute
     // Pattern: #[attribute] { items }
+    //
+    // This rule handles zero or more attribute blocks.
+    // For each block, every item gets the attribute applied.
     (
         $(
             #[$meta:meta] {
@@ -170,24 +184,39 @@ macro_rules! cfgx {
             }
         )*
     ) => {
-        // TODO: Expand each block
-        // Each item gets the attribute applied
-        compile_error!("block syntax not yet implemented");
+        $(
+            // For each block, apply the attribute to each item
+            $(
+                #[$meta]
+                $item
+            )*
+        )*
     };
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
-    // This test should fail until we implement the macro
+    // Basic smoke test
     #[test]
-    #[ignore]
     fn macro_exists() {
         cfgx! {
             #[cfg(test)] {
                 const TEST_VALUE: u32 = 42;
             }
         }
+        assert_eq!(TEST_VALUE, 42);
+    }
+
+    // Test if/else syntax
+    #[test]
+    fn if_else_works() {
+        cfgx! {
+            if #[cfg(test)] {
+                const MODE: &str = "testing";
+            } else {
+                const MODE: &str = "production";
+            }
+        }
+        assert_eq!(MODE, "testing");
     }
 }
