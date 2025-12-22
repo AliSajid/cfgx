@@ -118,24 +118,19 @@ local dependency_checks = new Mapping<String, Step> {
   // Name: Generate list of licenses in JSON
   ["cargo-about-json"] = new Step {
     glob = "Cargo.toml$"
-    exclude = Types.Regex(#"^\.hk/"#)
-    check = "scripts/generate_about_json.sh"
-    // types (OR): file, rust
-    // pass_filenames was false in pre-commit
+    check = "mise run generate_about_json"
+    exclusive = true
   }
   // Name: Generate list of licenses in Markdown
   ["cargo-about-md"] = new Step {
     glob = "Cargo.toml$"
-    exclude = Types.Regex(#"^\.hk/"#)
-    check = "scripts/generate_about_md.sh meta/licenses.hbs"
-    // types (OR): file, rust
-    // pass_filenames was false in pre-commit
+    check = "mise run generate_about_md meta/licenses.hbs"
+    exclusive = true
   }
   // Name: Check Cargo.toml
   ["cargo-toml-lint"] = new Step {
-    glob = "^Cargo.toml$"
+    glob = "Cargo.toml$"
     check = "cargo-toml-lint {{files}}"
-    // types (OR): file, rust
   }
 }
 
@@ -185,6 +180,10 @@ hooks {
     fix = true
     stash = "git"
     steps {
+      // Documentation & legal
+      ...license_checks
+      ...documentation_checks
+
       // File quality checks
       ...file_format_checks
       ...file_content_fixers
@@ -197,10 +196,6 @@ hooks {
       // Rust development
       ...rust_checks
       ...dependency_checks
-
-      // Documentation & legal
-      ...documentation_checks
-      ...license_checks
 
       // Custom checks
       ...custom_steps
