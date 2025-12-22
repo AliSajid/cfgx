@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+//
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 //! Real-world scenario tests (Category 8)
 //!
 //! These tests validate practical use cases, particularly for bioinformatics

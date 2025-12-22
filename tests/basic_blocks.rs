@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+//
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 //! Basic block syntax tests (Category 1)
 //!
 //! These tests validate the fundamental block syntax without if/else.
