@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+//
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 //! Else-if chains tests (Category 6)
 //!
 //! These tests validate else-if chain syntax for multiple conditions.

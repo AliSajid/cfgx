@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+//
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 //! Compile-fail tests (Category 7)
 //!
 //! These tests verify that certain invalid uses of cfgx produce

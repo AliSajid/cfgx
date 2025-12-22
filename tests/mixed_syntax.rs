@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+//
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 //! Mixed syntax tests (Category 5)
 //!
 //! These tests validate using both block syntax and if/else syntax

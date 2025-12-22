@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+//
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 //! If/Else syntax tests (Category 2)
 //!
 //! These tests validate the if/else syntax for mutually exclusive branches.

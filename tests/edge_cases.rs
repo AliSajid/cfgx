@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+//
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
+
 //! Edge cases tests (Category 4)
 //!
 //! These tests validate robustness and edge cases.

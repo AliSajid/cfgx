@@ -19,7 +19,7 @@
 //!         const OS: &str = "unix";
 //!         const PATH_SEP: char = '/';
 //!     } else {
-//!         const OS: &str = "windows";  
+//!         const OS: &str = "windows";
 //!         const PATH_SEP: char = '\\';
 //!     }
 //! }
@@ -88,7 +88,7 @@
 ///     } else {
 ///         const OS_TYPE: &str = "other";
 ///     }
-///     
+///
 ///     if #[cfg(target_pointer_width = "64")] {
 ///         const ARCH_BITS: u8 = 64;
 ///     } else {
@@ -121,21 +121,21 @@
 ///             field_a: u32,
 ///             field_b: String,
 ///         }
-///         
+///
 ///         fn process(data: &Data) -> u32 {
 ///             data.field_a
 ///         }
-///         
+///
 ///         const FEATURE_ENABLED: bool = true;
 ///     } else {
 ///         struct Data {
 ///             field_a: u32,
 ///         }
-///         
+///
 ///         fn process(data: &Data) -> u32 {
 ///             data.field_a
 ///         }
-///         
+///
 ///         const FEATURE_ENABLED: bool = false;
 ///     }
 /// }
