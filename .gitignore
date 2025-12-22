@@ -38,5 +38,4 @@ sonar-generic-coverage.xsd
 sonar-report.xml
 sonar-validation.xml
 /target
-.shuttle*
 Secrets*.toml

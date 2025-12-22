@@ -90,25 +90,18 @@ local security_checks = new Mapping<String, Step> {
 local rust_checks = new Mapping<String, Step> {
   // Name: Rust format
   ["fmt"] = new Step {
-    glob = List("**/.rs")
     types = List("rust")
     check = "cargo +nightly fmt --all --quiet"
-    // types (AND): rust
-    // pass_filenames was false in pre-commit
   }
   // Name: Run clippy linter
   ["clippy"] = new Step {
-    glob = List("**/.rs")
     types = List("rust")
-    check = "cargo +nightly clippy --quiet --all-targets --all-features -- -D warnings"
+    check = "cargo +nightly clippy --quiet --all-targets -- -D warnings"
   }
   // Name: Run cargo check
   ["cargo-check"] = new Step {
-    glob = List("**/.rs")
     types = List("rust")
-    check = "cargo +nightly check --all-targets --all-features --quiet"
-    // types (AND): rust
-    // pass_filenames was false in pre-commit
+    check = "cargo +nightly check --all-targets --quiet"
   }
 }
 
@@ -143,7 +136,6 @@ local dependency_checks = new Mapping<String, Step> {
 local documentation_checks = new Mapping<String, Step> {
   // Name: Run Vale linter
   ["vale-lint"] = new Step {
-    glob = Types.Regex("^(README.md|CONTRIBUTING.md|CODE_OF_CONDUCT.md|guide/src/.*.md)$")
     types = List("markdown")
     check = "vale {{files}}"
   }

@@ -203,6 +203,7 @@ fn test_algorithm_selection() {
 
 // Test 8.4: Debug vs release configurations
 #[test]
+#[allow(clippy::assertions_on_constants)]
 fn test_debug_release_config() {
     cfgx! {
         if #[cfg(debug_assertions)] {
