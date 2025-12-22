@@ -300,6 +300,7 @@ fn test_where_clauses() {
 
 // Additional test: Async functions
 #[test]
+#[allow(clippy::let_underscore_future)]
 fn test_async_functions() {
     cfgx! {
         #[cfg(test)] {

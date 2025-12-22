@@ -16,6 +16,7 @@ use cfgx::cfgx;
 // Test 6.1: Simple else-if chain
 #[test]
 #[ignore = "else-if syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_simple_else_if() {
     // Desired syntax:
     // cfgx! {
@@ -34,6 +35,7 @@ fn test_simple_else_if() {
 // Test 6.2: Multiple else-if branches
 #[test]
 #[ignore = "else-if syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_multiple_else_if() {
     // Desired syntax:
     // cfgx! {
@@ -54,6 +56,7 @@ fn test_multiple_else_if() {
 // Test 6.3: Else-if with multiple items per branch
 #[test]
 #[ignore = "else-if syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_else_if_multiple_items() {
     // Desired syntax:
     // cfgx! {
@@ -78,6 +81,7 @@ fn test_else_if_multiple_items() {
 // Test 6.4: Else-if without final else
 #[test]
 #[ignore = "else-if syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_else_if_no_final_else() {
     // Desired syntax:
     // cfgx! {
@@ -95,6 +99,7 @@ fn test_else_if_no_final_else() {
 // Test 6.5: Long else-if chain (5+ branches)
 #[test]
 #[ignore = "else-if syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_long_else_if_chain() {
     // Desired syntax:
     // cfgx! {
@@ -212,6 +217,7 @@ fn test_os_detection_workaround() {
 
 // Documentation: Why else-if would be useful
 #[test]
+#[allow(clippy::assertions_on_constants)]
 fn test_else_if_benefits() {
     // Problem with current nesting: gets deeply indented and hard to read
     // Also, the cfg conditions get complex:
@@ -232,6 +238,7 @@ fn test_else_if_benefits() {
 
 // Implementation note: What else-if expansion should look like
 #[test]
+#[allow(clippy::assertions_on_constants)]
 fn test_else_if_expansion_logic() {
     // Input:
     // if #[cfg(A)] { item1 }

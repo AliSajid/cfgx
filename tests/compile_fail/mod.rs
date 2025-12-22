@@ -39,6 +39,7 @@ mod compile_fail_tests {
 // Workaround tests: Things that should fail but have workarounds
 #[test]
 #[allow(dead_code)]
+#[allow(clippy::assertions_on_constants)]
 fn test_workaround_patterns() {
     use cfgx::cfgx;
 

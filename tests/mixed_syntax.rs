@@ -16,6 +16,7 @@ use cfgx::cfgx;
 // Test 5.1: Mix if/else and regular blocks
 #[test]
 #[ignore = "Mixed syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_mix_if_else_and_blocks() {
     // This would be the desired syntax
     // cfgx! {
@@ -37,6 +38,7 @@ fn test_mix_if_else_and_blocks() {
 // Test 5.2: Multiple blocks followed by if/else
 #[test]
 #[ignore = "Mixed syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_blocks_then_if_else() {
     // Desired syntax:
     // cfgx! {
@@ -61,6 +63,7 @@ fn test_blocks_then_if_else() {
 // Test 5.3: If/else followed by regular blocks
 #[test]
 #[ignore = "Mixed syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_if_else_then_blocks() {
     // Desired syntax:
     // cfgx! {
@@ -81,6 +84,7 @@ fn test_if_else_then_blocks() {
 // Test 5.4: Alternating blocks and if/else
 #[test]
 #[ignore = "Mixed syntax not yet implemented"]
+#[allow(clippy::assertions_on_constants)]
 fn test_alternating_syntax() {
     // Desired syntax:
     // cfgx! {
@@ -138,6 +142,7 @@ fn test_mixed_via_nesting() {
 // Documentation: Why mixed syntax would be useful
 #[test]
 #[allow(dead_code)]
+#[allow(clippy::assertions_on_constants)]
 fn test_mixed_use_case_example() {
     // Use case: You want some items always present with cfg,
     // and some items conditionally present with mutual exclusion
@@ -174,6 +179,6 @@ fn test_mixed_use_case_example() {
     //     }
     // }
 
-    assert_eq!(DEBUG_ENABLED, true);
+    assert!(DEBUG_ENABLED);
     assert_eq!(helper(), 42);
 }

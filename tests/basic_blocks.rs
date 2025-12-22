@@ -102,6 +102,7 @@ fn test_complex_cfg_conditions() {
 
 // Test 1.5b: Complex cfg with any
 #[test]
+#[allow(clippy::assertions_on_constants)]
 fn test_complex_cfg_any() {
     cfgx! {
         #[cfg(any(feature = "opt1", feature = "opt2"))] {
@@ -113,10 +114,10 @@ fn test_complex_cfg_any() {
     }
 
     #[cfg(any(feature = "opt1", feature = "opt2"))]
-    assert_eq!(IS_OPTION_ENABLED, true);
+    assert!(IS_OPTION_ENABLED);
 
     #[cfg(not(any(feature = "opt1", feature = "opt2")))]
-    assert_eq!(IS_OPTION_ENABLED, false);
+    assert!(!IS_OPTION_ENABLED);
 }
 
 // Additional test: Empty block (edge case preview)

@@ -134,6 +134,7 @@ fn test_complex_types_in_branches() {
 // Additional test: if/else with structs that have different shapes
 #[test]
 #[allow(dead_code)]
+#[allow(clippy::assertions_on_constants)]
 fn test_different_struct_shapes() {
     cfgx! {
         if #[cfg(feature = "extended")] {
@@ -173,12 +174,13 @@ fn test_different_struct_shapes() {
             value: 42,
         };
         assert_eq!(config.value, 42);
-        assert_eq!(DEFAULT_EXTRA, false);
+        assert!(!DEFAULT_EXTRA);
     }
 }
 
 // Additional test: if/else with functions that have different implementations
 #[test]
+#[allow(clippy::assertions_on_constants)]
 fn test_different_function_implementations() {
     cfgx! {
         if #[cfg(debug_assertions)] {
