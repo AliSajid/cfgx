@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2023 - 2025 Ali Sajid Imami
+SPDX-FileCopyrightText: 2025 Ali Sajid Imami
 
 SPDX-License-Identifier: Apache-2.0
 SPDX-License-Identifier: MIT
@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
 
 # Third Party Licenses
 
-This page lists the licenses of the projects used in cargo-about.
+This page lists the licenses of the projects used in `cfgx`.
 
 ## Overview of licenses
 
@@ -677,7 +677,7 @@ Apache License 2.0
 
 #### Used by
 
-- [cfgx]( https://github.com/yourusername/cfgx ) 0.1.0
+- [cfgx]( https://github.com/AliSajid/cfgx ) 0.1.0
 - [itoa]( https://github.com/dtolnay/itoa ) 1.0.15
 - [proc-macro2]( https://github.com/dtolnay/proc-macro2 ) 1.0.103
 - [quote]( https://github.com/dtolnay/quote ) 1.0.42
