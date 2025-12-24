@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2023 - 2025 Ali Sajid Imami
+---
+# SPDX-FileCopyrightText: 2025 Ali Sajid Imami
 #
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
----
 name: Security Audit
 on:
     schedule:
@@ -36,4 +36,8 @@ jobs:
                 experimental: true
             - name: Run audit check
               shell: bash
-              run: cargo audit
+              run: cargo audit --format sarif | tee results.sarif
+            - name: "Upload to code-scanning"
+              uses: github/codeql-action/upload-sarif@5d4e8d1aca955e8d8589aabd499c5cae939e33c7 # v4
+              with:
+                sarif_file: results.sarif
