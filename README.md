@@ -186,11 +186,11 @@ follows. Test categories:
 
 ### Current Implementation Status
 
-- [ ] Phase 1: Basic block syntax (Tests 1.1-1.5)
-- [ ] Phase 2: If/else syntax (Tests 2.1-2.5)
-- [ ] Phase 3: All item types (Tests 3.1-3.8)
-- [ ] Phase 4: Edge cases (Tests 4.1-4.8)
-- [ ] Phase 5: Real-world scenarios (Tests 8.1-8.7)
+- [X] Phase 1: Basic block syntax (Tests 1.1-1.5)
+- [X] Phase 2: If/else syntax (Tests 2.1-2.5)
+- [X] Phase 3: All item types (Tests 3.1-3.8)
+- [X] Phase 4: Edge cases (Tests 4.1-4.8)
+- [X] Phase 5: Real-world scenarios (Tests 8.1-8.7)
 
 ## Comparison with `cfg_block`
 
