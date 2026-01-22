@@ -1,27 +1,71 @@
+# SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+#
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
 [package]
 name = "cfgx"
 version = "0.1.0"
 edition = "2021"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Ali Sajid Imami <395482+AliSajid@users.noreply.github.com>"]
 license = "MIT OR Apache-2.0"
 description = "A macro for applying conditional compilation attributes to blocks of items"
-repository = "https://github.com/yourusername/cfgx"
+repository = "https://github.com/AliSajid/cfgx"
 keywords = ["macro", "cfg", "conditional", "compilation"]
 categories = ["development-tools", "rust-patterns"]
+rust-version = "1.78.0"
 
 [lib]
 proc-macro = false # This is a declarative macro, not a proc macro
 
+[features]
+# Test features
+arch_16 = []
+arch_32 = []
+arch_64 = []
+compact_genome = []
+compile_fail_tests = []
+disable_ptr_size = []
+experimental = []
+extended = []
+f64_precision = []
+high_precision = []
+high_precision_stats = []
+large_buffers = []
+mips = []
+never_enabled = []
+opt1 = []
+opt2 = []
+opt3 = []
+opt4 = []
+opt5 = []
+os_unix = []
+os_windows = []
+platform_a = []
+platform_b = []
+simd = []
+
 [dependencies]
-# No dependencies needed for declarative macros
 
 [dev-dependencies]
-# For compile-fail tests (optional, can add later)
+num-traits = "0.2.19"
 trybuild = "1.0.114"
 
 [[test]]
 name = "basic_blocks"
 path = "tests/basic_blocks.rs"
+
+[[test]]
+name = "compile_fail"
+path = "tests/compile_fail/mod.rs"
+
+[[test]]
+name = "edge_cases"
+path = "tests/edge_cases.rs"
+
+[[test]]
+name = "else_if_chains"
+path = "tests/else_if_chains.rs"
 
 [[test]]
 name = "if_else"
@@ -32,8 +76,8 @@ name = "item_types"
 path = "tests/item_types.rs"
 
 [[test]]
-name = "edge_cases"
-path = "tests/edge_cases.rs"
+name = "mixed_syntax"
+path = "tests/mixed_syntax.rs"
 
 [[test]]
 name = "real_world"

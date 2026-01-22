@@ -1,0 +1,52 @@
+version = 1
+SPDX-PackageName = "cfgx"
+SPDX-PackageSupplier = "Ali Sajid Imami <395482+AliSajid@users.noreply.github.com>"
+SPDX-PackageDownloadLocation = "https://github.com/AliSajid/cfgx"
+
+[[annotations]]
+path = ".gitignore"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".markdownlint.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "Cargo.lock"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "MIT AND Apache-2.0"
+
+[[annotations]]
+path = "meta/vale-styles/config/**/*.txt"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "CHANGELOG.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "renovate.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "MIT AND Apache-2.0"
+
+[[annotations]]
+path = "REUSE.toml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "licenses_report.json"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "MIT AND Apache-2.0"

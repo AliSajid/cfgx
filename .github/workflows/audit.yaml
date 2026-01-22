@@ -1,0 +1,43 @@
+---
+# SPDX-FileCopyrightText: 2025 Ali Sajid Imami
+#
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+name: Security Audit
+on:
+    schedule:
+        - cron: 0 0 1,15 * *
+    push:
+        branches:
+            - "*"
+        paths:
+            - "**/Cargo.toml"
+            - "**/Cargo.lock"
+    workflow_dispatch:
+permissions:
+    contents: read
+jobs:
+    security_audit:
+        if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+        runs-on: ubuntu-latest
+        permissions:
+            issues: write
+            checks: write
+        steps:
+            - name: Harden Runner
+              uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+              with:
+                egress-policy: audit
+            - name: Checkout
+              uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+            - name: Install dependencies
+              uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
+              with:
+                experimental: true
+            - name: Run audit check
+              shell: bash
+              run: cargo audit --format sarif | tee results.sarif
+            - name: "Upload to code-scanning"
+              uses: github/codeql-action/upload-sarif@5d4e8d1aca955e8d8589aabd499c5cae939e33c7 # v4
+              with:
+                sarif_file: results.sarif
