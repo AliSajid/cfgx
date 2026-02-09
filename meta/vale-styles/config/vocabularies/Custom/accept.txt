@@ -38,3 +38,13 @@ toml_datetime
 toml_parser
 toml_writer
 trybuild
+Ali
+Sajid
+Imami
+hk
+executable
+texthooks
+(?i)reuse
+(?i)config
+gitleaks
+(?i)codeql

@@ -16,6 +16,12 @@ SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
 SPDX-License-Identifier = "CC0-1.0"
 
 [[annotations]]
+path = ".markdownlintignore"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
 path = "Cargo.lock"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2025 Ali Sajid Imami"
